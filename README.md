@@ -1,7 +1,7 @@
 <!-- <p align='center'> -->
 # <p align=center> Discord Guild Members Scraper
-## <p align=center> Check out my other project
-## <p align=center> [Darkend](https://darkend.tech)
+## <p align=center> Check out my other project<br>[Darkend](https://darkend.tech)
+
 <!-- </p> -->
 
 - ⭐ Give the project a star if you liked it! It'll help other people find it :)
