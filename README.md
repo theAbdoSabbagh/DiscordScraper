@@ -1,10 +1,8 @@
-<center>
-<h1>✨ Discord Guild Members Scraper ✨</h1>
-</center>
-<center>
-<h2>Check out my other project</h2> 
-<h2><a href="https://darkend.tech" target="_blank">Darkend</a></h2><br>
-</center>
+<!-- <p align='center'> -->
+# <p align=center> Discord Guild Members Scraper
+## <p align=center> Check out my other project
+## <p align=center> [Darkend](https://darkend.tech)
+<!-- </p> -->
 
 - ⭐ Give the project a star if you liked it! It'll help other people find it :)
 
