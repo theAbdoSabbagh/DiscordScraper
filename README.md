@@ -24,7 +24,7 @@
 <h1>👾 Features </h1>
 </center>
 
-  -  Ability to scrape the profile pictures members in the following formats:
+  -  Ability to scrape the profile pictures of members in the following formats:
      -  `webp`
      -  `png`
      -  `jpg`
@@ -38,7 +38,7 @@
 <h1>📝 Notes</h1>
 </center>
 
-  - ❗ The tool is still in early stages of development.
+  - ❗ Discord disabled getting a user "About me" section through their API, so this tool can't provide it.
 
   - 👍🏻 There are plenty of things that could be added to the script, feel free to contribute! 
   
