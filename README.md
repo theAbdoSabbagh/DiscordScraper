@@ -81,7 +81,13 @@
 >>> python main.py 
 ```
 <center>
+<h1>🏆 Project screenshots<h1>
+<img src='source/images/console.png' style="width: 90%"> 
+<img src='source/images/datascraped_folder.png' style="width: 90%"> 
+<img src='source/images/guild_folder.png' style="width: 90%"> 
+</center>
 
+<center>
 <h2>🔎 License </h2>
 <p>MIT License </p>
 </center>
