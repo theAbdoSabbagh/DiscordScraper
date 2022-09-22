@@ -1,6 +1,7 @@
-import json, os, discord, aiohttp, string, requests
+import json, os, discord, string
 
 from rich import print
+from functools import cache
 
 header = """[bold white]██████╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗     ███████╗ ██████╗██████╗  █████╗ ██████╗ ███████╗██████╗ 
 ██╔══██╗██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔══██╗    ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
@@ -20,10 +21,11 @@ default_data = """{
 }
 """
 
+@cache
 def show_header():
-  print(header)
-  print(info)
+  print(f"{header}\n{info}\n")
 
+@cache
 def check_config_file():
   # If the config file doesn't exist
   if not os.path.isfile('config.json'):
@@ -58,44 +60,42 @@ class Logger():
   def custom(self, /, text : str, header : str, color : str):
     print(f"[bold {color}][{header}] {text} [/]")
 
+@cache
 def get_account_settings():
   with open('config.json', 'r') as file:
     file_data = json.loads(file.read())
   
   return file_data
 
+@cache
 def create_guild_directory(guild : discord.Guild):
-  if not os.path.isdir(guild.name):
-    return os.makedirs(guild.name)
+  if not os.path.isdir(f'DataScraped/{guild.name}'):
+    return os.makedirs(f'DataScraped/{guild.name}')
 
-  for filename in os.listdir(guild.name):
-    file_path = os.path.join(guild.name, filename)
+  for filename in os.listdir(f'DataScraped/{guild.name}'):
+    file_path = os.path.join(f'DataScraped', guild.name, filename)
     if os.path.isfile(file_path):
       os.remove(file_path)
 
-def create_member_file(member : discord.Member):
+@cache
+async def create_member_file(member : discord.Member):
   if member.bot:
     return
-  with open(f'{member.guild.name}/{member.name}.txt', 'w+') as file:
-    file.write(f'Username: {member.name}\nAccount ID: {member.id}\nDiscriminator: {member.discriminator}\n\n\nScraped by Discord-Scraper: https://github.com/Sxvxgee/Discord-Scraper')
+  try:
+    username = "".join(x for x in member.name if x in string.printable)
+    profile = await member.guild.fetch_member_profile(member.id)
+    bio = "".join(x for x in profile.bio if x in string.printable) if profile.bio is not None else "User doesn't have a bio."
+    with open(f'DataScraped/{member.guild.name}/{member.id}.txt', 'w+') as file:
+      file.write(f'Username: {username}\nAccount ID: {member.id}\nBio: {bio}\nDiscriminator: #{member.discriminator}\n\n\nScraped by Discord-Scraper: https://github.com/Sxvxgee/Discord-Scraper/ \nFollow Sxvxge: https://github.com/Sxvxgee/')
+  except Exception as e:
+    print(f"[bold red][Error] Failed to write the data of the account \"{member}\": {e} [/]")
 
+@cache
 async def download_pfp(member : discord.Member):
-  if member.bot or member.avatar is None or member.avatar.url is None:
+  if member.bot or member.avatar is None:
     return
-  # session : aiohttp.ClientSession
-  data = get_account_settings()
-  URL = member.avatar.url.replace('.webp', data['format'])
-  print(URL)
-  headers={
-      "Authorization": data["token"],
-      "content-type": "application/json"
-  }
-  # async with aiohttp.ClientSession(headers = headers) as session:
-  #   async with session.get(URL) as response:
-  #     text = await response.text()
-  #     with open(f'{member.guild.name}/{member.name}.{data["format"]}', 'w+') as file:
-  #       file.write(text)
-  response = requests.get(URL, headers = headers)
-  print(response.text, type(response.text))
-  with open(f'{member.guild.name}/{member.name}.{data["format"]}', 'w+') as file:
-    file.write(response.text)
+  try:
+    data = get_account_settings()
+    await member.avatar.save(f'DataScraped/{member.guild.name}/{member.id}.{data["format"]}')
+  except Exception as e:
+    print(f"[bold red][Error] Failed to save the profile picture of the account \"{member}\": {e} [/]")
