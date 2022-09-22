@@ -16,9 +16,7 @@
 
 - ⚠️ This project uses [discord.py-self](https://github.com/dolfies/discord.py-self). Using selfbots is against Discord's TOS, use this project at your own risk.
 
-- ✅ The goal of the project is scraping users in specifed guild. Scrapes pfp's, usernames, ids, pfp url's. 
-
-- 💗 I'm grateful for whoever stars this repo and buys me a coffee! 
+- ✅ The goal of the project is scraping users in a specifed guild. Scrapes pfps, usernames, IDs, pfp urls and bios. 
 
 <center> 
 <h1>👾 Features </h1>
@@ -29,20 +27,16 @@
      -  `png`
      -  `jpg`
      -  `jpeg`
-  -  Scrape all members usernames to a `txt` file.
+  -  Scrape all members Usernames, IDs, Bios, and Discriminators to a `txt` file.
   -  Ability to specify which guilds to scrape in the JSON config file.
   -  Each guild has it's own folder so the data is easy to handle.
-  -  Uses JSON for simplicity.
 
 <center> 
 <h1>📝 Notes</h1>
 </center>
-
-  - ❗ Discord disabled getting a user "About me" section through their API, so this tool can't provide it.
-
   - 👍🏻 There are plenty of things that could be added to the script, feel free to contribute! 
   
-  - 👀 This project is inspired by [sertchan](https://github.com/sertchan)'s [JS-based tool](https://github.com/sertchan/Discord-Scraper).
+  - ❗ This project is inspired by [sertchan](https://github.com/sertchan)'s [JS-based tool](https://github.com/sertchan/Discord-Scraper).
   <br><br>
 
 
