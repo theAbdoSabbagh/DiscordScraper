@@ -34,7 +34,9 @@
 <center> 
 <h1>📝 Notes</h1>
 </center>
-  - 👍🏻 There are plenty of things that could be added to the script, feel free to contribute! 
+
+  - 👍🏻 There are plenty of things that could be added to the script, feel free to contribute!
+
   - ❗ This project is inspired by [sertchan](https://github.com/sertchan)'s [JS-based tool](https://github.com/sertchan/Discord-Scraper).
   <br><br>
 
