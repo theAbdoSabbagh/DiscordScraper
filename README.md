@@ -26,10 +26,9 @@
 
 ### Installation
    
-- Clone repo from git and navigate to source.
+- Clone repo from git
 ```sh
 >>> git clone https://github.com/Sxvxgee/Discord-Scraper
->>> cd Discord-Scraper/source
 ```
 
 - Install the dependencies.
