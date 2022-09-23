@@ -28,7 +28,8 @@ default_data = {
   "token": "",
   "guild_id": 0,
   "pfp_format": "png",
-  "purge_old_data": True
+  "purge_old_data": True,
+  "download_pfp": True
 }
 
 
@@ -39,19 +40,20 @@ def show_header():
 @cache
 def check_config_file():
   """
-  Creates a config file if it doesn't exist.
+  Creates a config file if it doesn"t exist.
   If it does, validates the config to required config.
   """
-  if not os.path.isfile('config.json'): # Create a config file with default values if it doesn't exist
-    json.dump(default_data, open('config.json', 'w'), indent=2)
+  if not os.path.isfile("config.json"): # Create a config file with default values if it doesn't exist
+    json.dump(default_data, open("config.json", "w"), indent=2)
     return
 
-  # Validating the JSON file, adding keys if they don't exist in it
-  with open('config.json', 'r') as file:
+  # Validating the JSON file, adding keys if they don"t exist in it
+  with open("config.json", "r") as file:
     file_data = json.loads(file.read())
   
   required_data = {}
 
+  #TODO: The complexity of this part is more than requierd; could be shortened possibly.
   for key, value in file_data.items():
     if key in default_data.keys():
       required_data[key] = value
@@ -60,7 +62,7 @@ def check_config_file():
     if default_key not in required_data.keys():
       required_data[default_key] = default_value
 
-  json.dump(required_data, open('config.json', 'w'), indent=2)
+  json.dump(required_data, open("config.json", "w"), indent=2)
 
 
 class Logger():
@@ -103,8 +105,8 @@ async def create_member_file(member: Member):
     username = clean_string(member.display_name)
     profile = await member.guild.fetch_member_profile(member.id)
     bio = clean_string(profile.bio) if profile.bio else "User doesn't have a bio."
-    with open(f'DataScraped/{member.guild.name}/{member.id}.txt', 'w+') as file:
-      file.write(f'Username: {username}\nAccount ID: {member.id}\nBio: {bio}\nDiscriminator: #{member.discriminator}\n\n\nScraped by Discord-Scraper: https://github.com/Sxvxgee/Discord-Scraper/ \nFollow Sxvxge: https://github.com/Sxvxgee/')
+    with open(f"DataScraped/{member.guild.name}/{member.id}.txt", "w+") as file:
+      file.write(f"Username: {username}\nAccount ID: {member.id}\nBio: {bio}\nDiscriminator: #{member.discriminator}\n\n\nScraped by Discord-Scraper: https://github.com/Sxvxgee/Discord-Scraper/ \nFollow Sxvxge: https://github.com/Sxvxgee/")
   except Exception as e:
     print(f"[bold red][Error] Failed to write the data of the account \"{member}\": {e} [/]")
 
@@ -114,6 +116,6 @@ async def download_pfp(member: Member):
     return
   try:
     data = get_account_settings()
-    await member.avatar.save(f'DataScraped/{member.guild.name}/{member.id}.{data["format"]}')
+    await member.avatar.save(f"DataScraped/{member.guild.name}/{member.id}.{data['pfp_format']}")
   except Exception as e:
     print(f"[bold red][Error] Failed to save the profile picture of the account \"{member}\": {e} [/]")

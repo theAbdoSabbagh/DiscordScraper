@@ -1,2 +1,2 @@
-discord.py-self==1.9.2
+git+https://github.com/dolfies/discord.py-self.git
 rich==12.0.0

@@ -25,7 +25,7 @@
 - This project is inspired by sertchan's [JS-based tool](https://github.com/sertchan/Discord-Scraper).
 
 ### Installation
-   
+
 - Clone repo from git
 ```sh
 >>> git clone https://github.com/Sxvxgee/Discord-Scraper
@@ -40,10 +40,11 @@
 ```json
 {
   "token": "",
-  "guild_id": 0,
-  "pfp_format": "png"
-}
-```
+  "guild_id": 0000,
+  "pfp_format": "png",
+  "purge_old_data": true,
+  "download_pfp": true
+}```
 
 ### Usage
 ```sh
