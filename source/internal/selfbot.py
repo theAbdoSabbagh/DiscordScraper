@@ -8,9 +8,9 @@ client = Client(chunk_guilds_at_startup = False)
 logger = Logger()
 
 
-async def scrape(guild: Guild):
+async def scrape(conf, guild: Guild):
   logger.scraper("Starting...")
-  members = await guild.fetch_members([random.choice(guild.channels)])
+  members = await guild.fetch_members([random.choice(guild.channels)] if conf["channel_id"] != 0 else conf["channel_id"])
   members = [member for member in members if not member.bot]
   logger.success("Fetched members successfully")
   return members
@@ -24,7 +24,7 @@ async def on_ready():
   guild_id = config["guild_id"]
 
   guild = client.get_guild(int(guild_id))
-  members = await scrape(guild)
+  members = await scrape(config, guild)
 
   create_guild_directory(guild)
 

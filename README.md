@@ -35,16 +35,9 @@
 ```sh
 >>> pip install -r requirements.txt
 ```
-
 - Rename `config.json.example` to `config.json` and edit required settings.
-```json
-{
-  "token": "",
-  "guild_id": 0000,
-  "pfp_format": "png",
-  "purge_old_data": true,
-  "download_pfp": true
-}```
+  - Input `channel_id` if you wish to scrape members from a particular channel; else leave 0
+
 
 ### Usage
 ```sh
@@ -53,9 +46,9 @@
 ```
 
 ### Project screenshots
-<img src='assets/console.png' style="width: 90%"> 
-<img src='assets/datascraped_folder.png' style="width: 90%"> 
-<img src='assets/guild_folder.png' style="width: 90%"> 
+<img src='assets/console.png' style="width: 90%">
+<img src='assets/datascraped_folder.png' style="width: 90%">
+<img src='assets/guild_folder.png' style="width: 90%">
 
 ## License Disclaimer
 This project is licensed under the MIT license.
