@@ -1,3 +1,2 @@
-asyncio==3.4.3
-discord.py-self==2.0.0
+discord.py-self==1.9.2
 rich==12.0.0

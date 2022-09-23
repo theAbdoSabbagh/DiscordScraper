@@ -1,97 +1,115 @@
-import json, os, discord, string
-
+from typing import Optional
 from rich import print
 from functools import cache
 
-header = """[bold white]██████╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗     ███████╗ ██████╗██████╗  █████╗ ██████╗ ███████╗██████╗ 
+import json
+import os
+import string
+import shutil
+
+from discord import Guild, Member # type: ignore
+
+
+header = """[bold white]
+██████╗ ██╗███████╗ ██████╗ ██████╗ ██████╗ ██████╗     ███████╗ ██████╗██████╗  █████╗ ██████╗ ███████╗██████╗ 
 ██╔══██╗██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔══██╗    ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
 ██║  ██║██║███████╗██║     ██║   ██║██████╔╝██║  ██║    ███████╗██║     ██████╔╝███████║██████╔╝█████╗  ██████╔╝
 ██║  ██║██║╚════██║██║     ██║   ██║██╔══██╗██║  ██║    ╚════██║██║     ██╔══██╗██╔══██║██╔═══╝ ██╔══╝  ██╔══██╗
 ██████╔╝██║███████║╚██████╗╚██████╔╝██║  ██║██████╔╝    ███████║╚██████╗██║  ██║██║  ██║██║     ███████╗██║  ██║
 ╚═════╝ ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝     ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
-                                                                                                                [/]"""
-info = """[bold black]🏴 Made by Sxvxge.
+[/]"""
+info = """[bold black]
+🏴 Made by Sxvxge.
 [bold yellow]🚀 Star the repo: https://github.com/Sxvxgee/Discord-Scraper
-[bold green]✅ Follow me: https://github.com/Sxvxgee/ [/]"""
+[bold green]✅ Follow me: https://github.com/Sxvxgee/
+[/]"""
 
-default_data = """{
-  "guild_id": 0,
+default_data = {
   "token": "",
-  "format": "png"
+  "guild_id": 0,
+  "pfp_format": "png",
+  "purge_old_data": True
 }
-"""
+
 
 @cache
 def show_header():
-  print(f"{header}\n{info}\n")
+  print(f"{header}{info}")
 
 @cache
 def check_config_file():
-  # If the config file doesn't exist
-  if not os.path.isfile('config.json'):
-    with open('config.json', 'w+') as file:
-      file.write(json.dumps(json.loads(default_data), indent = 2, sort_keys = False))
+  """
+  Creates a config file if it doesn't exist.
+  If it does, validates the config to required config.
+  """
+  if not os.path.isfile('config.json'): # Create a config file with default values if it doesn't exist
+    json.dump(default_data, open('config.json', 'w'), indent=2)
+    return
 
   # Validating the JSON file, adding keys if they don't exist in it
-  data = json.loads(default_data)
   with open('config.json', 'r') as file:
     file_data = json.loads(file.read())
   
-  for default_key, default_value in data.items():
-    if default_key not in file_data.keys():
-      file_data[default_key] = default_value
+  required_data = {}
 
-  with open('config.json', 'w+') as file:
-    file.write(json.dumps(file_data, indent = 2, sort_keys = False))
+  for key, value in file_data.items():
+    if key in default_data.keys():
+      required_data[key] = value
+
+  for default_key, default_value in default_data.items():
+    if default_key not in required_data.keys():
+      required_data[default_key] = default_value
+
+  json.dump(required_data, open('config.json', 'w'), indent=2)
+
 
 class Logger():
-  def __init__(self, bot : discord.Client) -> None:
-    self.bot = bot
+  def __init__(self) -> None:
+    ...
 
-  def scraper(self, /, text : str):
+  def scraper(self, text: str) -> None:
     print(f"[bold white][Scraper] {text} [/]")
 
-  def success(self, /, text : str):
+  def success(self, text: str) -> None:
     print(f"[bold green][Success] {text} [/]")
 
-  def error(self, /, text : str):
+  def error(self, text: str) -> None:
     print(f"[bold red][Error] {text} [/]")
 
-  def custom(self, /, text : str, header : str, color : str):
+  def custom(self, text: str, header: Optional[str] = None, color: str = "white") -> None:
     print(f"[bold {color}][{header}] {text} [/]")
 
 @cache
 def get_account_settings():
-  with open('config.json', 'r') as file:
-    file_data = json.loads(file.read())
-  
-  return file_data
+  return json.load(open("config.json"))
 
 @cache
-def create_guild_directory(guild : discord.Guild):
-  if not os.path.isdir(f'DataScraped/{guild.name}'):
-    return os.makedirs(f'DataScraped/{guild.name}')
+def create_guild_directory(guild: Guild):
+  if get_account_settings()["purge_old_data"]:
+    shutil.rmtree(f"data/{guild.id}", ignore_errors=True)
+  os.makedirs(f"DataScraped/{guild.name}", exist_ok=True)
 
-  for filename in os.listdir(f'DataScraped/{guild.name}'):
-    file_path = os.path.join(f'DataScraped', guild.name, filename)
-    if os.path.isfile(file_path):
-      os.remove(file_path)
 
 @cache
-async def create_member_file(member : discord.Member):
+def clean_string(string_to_clean: str) -> str:
+  return "".join([char for char in string_to_clean if char in string.printable])
+
+@cache
+async def create_member_file(member: Member):
   if member.bot:
     return
+
   try:
-    username = "".join(x for x in member.name if x in string.printable)
+    username = clean_string(member.display_name)
     profile = await member.guild.fetch_member_profile(member.id)
-    bio = "".join(x for x in profile.bio if x in string.printable) if profile.bio is not None else "User doesn't have a bio."
+    bio = clean_string(profile.bio) if profile.bio else "User doesn't have a bio."
     with open(f'DataScraped/{member.guild.name}/{member.id}.txt', 'w+') as file:
       file.write(f'Username: {username}\nAccount ID: {member.id}\nBio: {bio}\nDiscriminator: #{member.discriminator}\n\n\nScraped by Discord-Scraper: https://github.com/Sxvxgee/Discord-Scraper/ \nFollow Sxvxge: https://github.com/Sxvxgee/')
   except Exception as e:
     print(f"[bold red][Error] Failed to write the data of the account \"{member}\": {e} [/]")
 
 @cache
-async def download_pfp(member : discord.Member):
+async def download_pfp(member: Member):
   if member.bot or member.avatar is None:
     return
   try:
