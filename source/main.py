@@ -1,9 +1,9 @@
-from utils.useful import show_header, check_config_file, Logger, get_account_settings
-from utils.selfbot import bot
+from internal.utils import show_header, check_config_file, get_account_settings, Logger
+from internal.selfbot import client
 
 show_header()
 check_config_file()
-log = Logger(bot)
+log = Logger()
 config = get_account_settings()
 
-bot.run(config['token'])
+client.run(config["token"]) # type: ignore

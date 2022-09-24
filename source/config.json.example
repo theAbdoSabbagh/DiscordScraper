@@ -1,0 +1,8 @@
+{
+  "token": "",
+  "guild_id": 0000,
+  "pfp_format": "png",
+  "purge_old_data": true,
+  "download_pfp": true,
+  "channel_id": 0
+}
