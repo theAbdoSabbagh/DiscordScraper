@@ -51,7 +51,7 @@ def check_config_file():
   # Validating the JSON file, adding keys if they don"t exist in it
   with open("config.json", "r") as file:
     file_data = json.loads(file.read())
-  
+
   required_data = {}
 
   #TODO: The complexity of this part is more than requierd; could be shortened possibly.
