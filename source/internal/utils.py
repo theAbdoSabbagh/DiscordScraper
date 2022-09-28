@@ -56,11 +56,11 @@ def check_config_file():
 
   #TODO: The complexity of this part is more than requierd; could be shortened possibly.
   for key, value in file_data.items():
-    if key in default_data.keys():
+    if key in default_data:
       required_data[key] = value
 
   for default_key, default_value in default_data.items():
-    if default_key not in required_data.keys():
+    if default_key not in required_data:
       required_data[default_key] = default_value
 
   json.dump(required_data, open("config.json", "w"), indent=2)
