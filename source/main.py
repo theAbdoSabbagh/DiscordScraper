@@ -6,4 +6,4 @@ check_config_file()
 log = Logger()
 config = get_account_settings()
 
-client.run(config["token"]) # type: ignore
+client.run(config["token"])
