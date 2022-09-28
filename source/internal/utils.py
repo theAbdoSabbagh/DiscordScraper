@@ -7,7 +7,7 @@ import os
 import string
 import shutil
 
-from discord import Guild, Member
+from discord import Guild, Member # type: ignore
 
 
 header = """[bold white]
@@ -50,8 +50,8 @@ def check_config_file():
 
   # Validating the JSON file, adding keys if they don"t exist in it
   with open("config.json", "r") as file:
-    file_data = json.loads(file)
-
+    file_data = json.loads(file.read())
+  
   required_data = {}
 
   #TODO: The complexity of this part is more than requierd; could be shortened possibly.
@@ -70,16 +70,20 @@ class Logger():
   def __init__(self) -> None:
     ...
 
-  def scraper(self, text: str) -> None:
+  @staticmethod
+  def scraper(text: str) -> None:
     print(f"[bold white][Scraper] {text} [/]")
 
-  def success(self, text: str) -> None:
+  @staticmethod
+  def success(text: str) -> None:
     print(f"[bold green][Success] {text} [/]")
 
-  def error(self, text: str) -> None:
+  @staticmethod
+  def error(text: str) -> None:
     print(f"[bold red][Error] {text} [/]")
 
-  def custom(self, text: str, header: Optional[str] = None, color: str = "white") -> None:
+  @staticmethod
+  def custom(text: str, header: Optional[str] = None, color: str = "white") -> None:
     print(f"[bold {color}][{header}] {text} [/]")
 
 @cache
