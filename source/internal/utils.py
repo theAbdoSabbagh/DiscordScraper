@@ -7,7 +7,7 @@ import os
 import string
 import shutil
 
-from discord import Guild, Member # type: ignore
+from discord import Guild, Member
 
 
 header = """[bold white]
