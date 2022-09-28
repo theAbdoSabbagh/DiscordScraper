@@ -1,5 +1,4 @@
 # <p align=center> Discord Guild Members Scraper
-## <p align=center> Check out my other project<br>[Darkend](https://darkend.tech)
 
 - Give the project a star if you liked it! It'll help other people find it :)
 - This project uses [discord.py-self](https://github.com/dolfies/discord.py-self). Using selfbots is against Discord's TOS, use this project at your own risk.
@@ -28,12 +27,12 @@
 
 - Clone repo from git
 ```sh
->>> git clone https://github.com/Sxvxgee/Discord-Scraper
+$ git clone https://github.com/Sxvxgee/Discord-Scraper
 ```
 
 - Install the dependencies.
 ```sh
->>> pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 - Rename `config.json.example` to `config.json` and edit required settings.
   - Input `channel_id` if you wish to scrape members from a particular channel; else leave 0
@@ -41,8 +40,8 @@
 
 ### Usage
 ```sh
->>> cd Discord-Scraper/source
->>> python main.py 
+$ cd Discord-Scraper/source
+$ python3 main.py 
 ```
 
 ### Project screenshots
