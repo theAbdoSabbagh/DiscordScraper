@@ -52,3 +52,6 @@
 
 ## License Disclaimer
 This project is licensed under the MIT license.
+
+# Note
+I will be working on a custom Disocrd library for everything a user account can do very soon, and it will be used in this project instead of `discord.py-self` to ensure it's faster and better than ever.
